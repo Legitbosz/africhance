@@ -5,6 +5,31 @@ document.getElementById('ticker-close').addEventListener('click', function(){
   document.body.classList.add('ticker-off');
 });
 
+// Live news headlines — Google News Nigeria, via the free rss2json
+// service (no key). Headlines of what is happening in the country
+// that day, not a repeat of the opportunities on the page.
+(function(){
+  var track = document.getElementById('news-track');
+  if (!track) return;
+  var esc = function(s){
+    return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  };
+  var fallback = function(){
+    track.innerHTML = '<span><b>CLOSING SOON:</b> NNPC / SNEPCo Scholarship ends 30 November 2026</span><span><b>CLOSING SOON:</b> WAAW Foundation Scholarship ends 18 December 2026</span><span>Today\u2019s headlines are unavailable right now — check back shortly</span>';
+  };
+  fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent('https://news.google.com/rss/search?q=Nigeria&hl=en-NG&gl=NG&ceid=NG:en'))
+    .then(function(r){ if (!r.ok) throw new Error('news ' + r.status); return r.json(); })
+    .then(function(d){
+      var items = (d.items || []).slice(0, 8);
+      if (!items.length) throw new Error('no headlines');
+      var html = items.map(function(it){
+        return '<span><a href="' + esc(it.link) + '" target="_blank" rel="noopener">' + esc(it.title) + '</a></span>';
+      }).join('');
+      track.innerHTML = html + html;
+    })
+    .catch(fallback);
+})();
+
 // Live FX rates — free, no-key Open ER-API, daily rates, CORS-enabled.
 // No NGX price is hard-coded: NGX needs a free API key, which must not
 // ship in a public page, so the ticker links out to the live NGX terminal.
