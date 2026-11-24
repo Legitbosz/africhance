@@ -1,3 +1,8 @@
+document.getElementById('ticker-close').addEventListener('click', function(){
+  document.getElementById('ticker').style.display = 'none';
+  document.body.classList.add('ticker-off');
+});
+
 document.querySelectorAll('.filter').forEach(function(btn){
   btn.addEventListener('click', function(){
     document.querySelectorAll('.filter').forEach(function(b){ b.classList.remove('active'); });
