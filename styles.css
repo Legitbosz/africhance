@@ -6,7 +6,13 @@
 .ticker-track-wrap:hover .ticker-track{animation-play-state:paused}
 .ticker-track span{padding:0 28px;font-size:14px}
 .ticker-track b{color:#f2b705}
+.ticker-track a{color:#fff;text-decoration:underline}
 @keyframes ticker-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .ticker-close{background:transparent;border:0;color:#fff;font-size:20px;padding:6px 14px;cursor:pointer}
 body.ticker-off{padding-bottom:0}
 body{padding-bottom:42px}
+.market-ticker{position:fixed;left:0;right:0;bottom:42px;z-index:20;background:#123524;color:#fff;display:flex;align-items:stretch;border-top:1px solid #2a5a3f}
+.market-ticker .ticker-label{background:#123524;color:#f2b705;border-right:1px solid #2a5a3f}
+.market-ticker .ticker-track{animation-duration:60s}
+.market-ticker .ticker-track span{font-size:13px}
+body{padding-bottom:80px}
